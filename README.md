@@ -11,4 +11,4 @@ Sala de chat - node.js, mongodb, socket.io y vue.js
 -	http://localhost:3000/
 
 
-3- Se iniciara la aplicación y ya solo tienes que poner tu nombre en input para acceder al chat con tu nombre de usuario
+3- Se iniciara la aplicación y ya solo tienes que poner tu nombre en el input para acceder al chat con tu nombre de usuario
