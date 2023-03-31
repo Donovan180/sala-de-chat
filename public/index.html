@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/vue@3.0.3/dist/vue.global.js"></script>
+    <title>Chat</title>
+</head>
+<body>
+
+    <section id="app" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-12">
+                    
+                    <template v-if="step === 'nombre'">
+                        <img src="./img/chat.png" class="img-chat" alt="">
+                        <h1 class="title">Sala de Chat</h1>
+                        
+                        <div class="input-group">
+                            <input v-model="nombre" class="form-control" type="text" placeholder="Ingrese su nombre">
+                            <a @click="signIn" class="btn btn-outline-primary" id="button-addon2">
+                                Ingresar
+                            </a>
+                            
+                        </div>
+                    </template>
+                    <template v-else>
+                        
+                        <div class="container py-3">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+                                    <div class="card" id="chat1" style="border-radius: 15px;">
+                                        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                            <i class="fas fa-angle-left"></i>
+                                            <p v-if="step === 'chat'" class="mb-0 fw-bold">
+                                                Live chat - 
+                                                <span class="badge bg-success">{{ nombre }}</span>
+                                            </p>
+                                            <i class="fas fa-times"></i>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="input-group buscar">
+                                                <input class="form-control" @keyup="search" type="text" v-model="searchQuery" placeholder="Buscar...">
+                                            </div>
+                                                <div v-if="messages.length" class="chat-container">
+                                                    <div v-for="item in messages" class="d-flex" :class="{ 'justify-content-end': nombre === item.nombre }">
+                                                        <div class="p-3 ms-3 chat-message" :class="{ 'me': nombre === item.nombre }">
+                                                            <p class="has-text-weight-bold">{{ item.nombre }}</p> 
+                                                            <p class="msg">{{ item.message }}</p>
+                                                            <p class="date-msg">
+                                                                {{ new Date(item.date).toLocaleDateString() }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <div class="form-outline">
+                                                <div class="input-group">
+                                                    <input v-model="message" class="form-control" type="text" placeholder="Ingrese el mensaje">
+                                                    <a type="submit" @click="send" class="btn btn-success">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="./chat.js"></script>
+</body>
+</html>
